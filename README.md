@@ -30,7 +30,9 @@
 #### Step 2: Configure the scan's settings
 
 ##### 2.a) Set the device IP to be scanned
-PUT CORRECT IMAGE
+
+<img width="899" height="536" alt="image" src="https://github.com/user-attachments/assets/7ead5c59-8a9c-4a07-9e92-35bdd180df3e" />
+
 
 ##### 2.b) Set the credentials for the scan
 
@@ -83,15 +85,15 @@ In this case, only 4 High, 4 Medium vulnerabilities were found. The other 222 we
 As seen in the previous image, the majority of vulnerabilities were related to VMware Tools. The solution was to update this software. The other vulnerabilities were patched with some workarounds given by Nessus, for example, adding some registry keys that were needed in Windows.
 
 
-#### Step 5:
+#### Step 5: Final analysis
 
+One last vulnerability scan was done after patching the OS and the software.
 
-#### Step 6:
+The result only shows information about some services running on the server. These informations are important to take into account, because if the services had bad configurations, an attacker could compromise them.
 
+<img width="2161" height="1083" alt="image" src="https://github.com/user-attachments/assets/cd01d065-be31-4f7d-9157-28aa9370a8e4" />
 
+<img width="2166" height="1230" alt="image" src="https://github.com/user-attachments/assets/852c36ac-91a5-44f6-b164-3a148634b348" />
+Scan results. No vulnerability was found.
 
-#### Step 7:
-
-
-#### Step 8:
 
