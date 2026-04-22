@@ -1,9 +1,10 @@
 # Vulnerability Scan with Nessus
 
 ### Introduction
+This project demonstrates the end-to-end Vulnerability Management Lifecycle by securing a critical asset (Windows Server 2022 VM) using Nessus Vulnerability Scanner. This project simulates a real-world scenario where an outdated server is assessed, prioritized for risks using the CVSS framework, and systematically hardened through patching and configuration adjustments. The goal is to show how an organization can reduce its attack surface using proactive defense and security baselines effectively.
 
 ### Lab network diagram
-
+<img width="584" height="342" alt="image" src="https://github.com/user-attachments/assets/9e58a760-1a71-4337-bc2f-fb5a381523d5" />
 
 
 #### Technologies used
@@ -11,6 +12,8 @@
 
 #### Key Concepts
   Nessus, Vulnerability Report, CVSS
+
+
 
 ### Step-by-step Implementation
 
@@ -37,7 +40,8 @@
 ##### 2.b) Set the credentials for the scan
 
 This credential is needed for Nessus to be able to connect to the device and execute the scanning.
-For this, a service user name svc_nessus was created, following the best practice of using a credential created specifically for the scan rather than a real user’s credentials.
+For this, a dedicated service account svc_nessus was created, following the best practice of using a credential created specifically for the scan rather than a real user’s credentials. This demonstrates the concept of Least Privilege: assigning specific permissions for scanning tasks rather than using a personal user account, which reduces the risk of credential theft.
+
 <img width="1483" height="611" alt="image" src="https://github.com/user-attachments/assets/96f07128-4408-4042-ab9a-c8a218dd93a7" />
 
 ##### 2.c) After applying the configuration, run the scan.
@@ -53,10 +57,10 @@ For the plugin section, all plugins were selected to scan for all possible vulne
 For each scan, Nessus generates a report with all the vulnerabilities found. In the first scan, 21 Critical, 43 High, 8 Medium, and 222 Info vulnerabilities were found.
 <img width="1390" height="582" alt="image" src="https://github.com/user-attachments/assets/39619846-5692-4ce2-b119-5659b5ed024a" />
 
-In the Vulnerabilities section, vulnerabilities are grouped depending on the software product they affect. Next to each one there´s a count of how many vulnerabilities were found in each category:
+In the Vulnerabilities section, vulnerabilities are grouped depending on the software product they affect. There's a column count that shows how many vulnerabilities were found in each category. This is important to identify software that may have more vulnerabilities than others and prioritize patching.
 <img width="1373" height="668" alt="image" src="https://github.com/user-attachments/assets/c5aa12b0-5018-46a5-8e3f-439bb89764ac" />
 
-The Remediations section shows a list of possible solutions for the vulnerabilities. Normally, these will be software updates of already known vulnerabilities. Each remediation shows how many vulnerabilities can be solved:
+The Remediations section lists possible solutions for the vulnerabilities. Normally, these will be updates of already known vulnerabilities for programs or the OS. Each remediation shows how many vulnerabilities can be solved; this way, it can also be prioritized to implement one remediation that solves the most vulnerabilities.
 <img width="1394" height="646" alt="image" src="https://github.com/user-attachments/assets/16eae6bf-310a-40e2-8f6d-cf5b05f7248f" />
 
 Nessus offers the possibility to export the report in a PDF file, but in the Nessus Essentials version, this option is disabled:
@@ -67,7 +71,9 @@ Nessus offers the possibility to export the report in a PDF file, but in the Nes
 
 ##### 4.a) Updating the system to resolve most of the vulnerabilities.
 
-For this testing lab, the scan was done on a newly created Windows Server 2022 VM, this way, the scan would return more vulnerabilities to show.
+Vulnerability Prioritization: Rather than fixing every alert, this project focuses on the Common Vulnerability Scoring System (CVSS). We prioritize Critical (9.0-10.0) and High (7.0-8.9) vulnerabilities, as these represent the most immediate risks to the enterprise network's availability.
+
+For this testing lab, the scan was purposely done on a newly created Windows Server 2022 VM, so the scan would return many vulnerabilities. Most of these vulnerabilities are related to OS updates. Installing these OS updates first would resolve the majority of the weaknesses.
 
 It's important to note that backups were made before updating the system. Best practices say that before any changes, measures should be taken in case a rollback is needed.
 
@@ -76,6 +82,7 @@ It's important to note that backups were made before updating the system. Best p
 ##### 4.b) Patching 
 
 Another vulnerability analysis was done after installing the Windows OS updates.
+
 In this case, only 4 High, 4 Medium vulnerabilities were found. The other 222 were information.
 
 <img width="2186" height="928" alt="image" src="https://github.com/user-attachments/assets/625ceacd-7e37-42a6-8702-0e549ef979cd" />
@@ -87,7 +94,7 @@ As seen in the previous image, the majority of vulnerabilities were related to V
 
 #### Step 5: Final analysis
 
-One last vulnerability scan was done after patching the OS and the software.
+One last vulnerability scan was done after patching the OS and the programs.
 
 The result only shows information about some services running on the server. These informations are important to take into account, because if the services had bad configurations, an attacker could compromise them.
 
@@ -96,4 +103,16 @@ The result only shows information about some services running on the server. The
 <img width="2166" height="1230" alt="image" src="https://github.com/user-attachments/assets/852c36ac-91a5-44f6-b164-3a148634b348" />
 Scan results. No vulnerability was found.
 
+
+
+
+### Lessons Learned
+
+This project successfully demonstrated the Vulnerability Management Lifecycle: 
+1. Discover (The initial scan)
+2. Prioritize (Analyzing the High/Criticals)
+3. Remediate (Applying patches/workarounds)
+4. Verify (The final clean scan)
+
+By focusing on the most CVSS critical vulnerabilities and the software with the most weaknesses, the attack surface could be reduced drastically faster, having a greater impact on decreasing business risk.
 
